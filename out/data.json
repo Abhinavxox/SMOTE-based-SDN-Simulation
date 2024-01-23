@@ -1,0 +1,116 @@
+{
+  "nodes": [
+    {
+      "type": "switch",
+      "name": "s1",
+      "mac": "00:00:00:00:00:01",
+      "connections": [
+        {
+          "type": "host",
+          "name": "h1",
+          "mac": "6a:01:2c:29:3f:db",
+          "port": 3,
+          "delay": "19.978"
+        },
+        {
+          "type": "switch",
+          "name": "s2",
+          "mac": "00:00:00:00:00:02",
+          "port": 1,
+          "delay": "5.123"
+        },
+        {
+          "type": "switch",
+          "name": "s3",
+          "mac": "00:00:00:00:00:03",
+          "port": 2,
+          "delay": "10.456"
+        }
+      ]
+    },
+    {
+      "type": "switch",
+      "name": "s2",
+      "mac": "00:00:00:00:00:04",
+      "connections": [
+        {
+          "type": "host",
+          "name": "h2",
+          "mac": "1a:e6:78:40:f0:3e",
+          "port": 2,
+          "delay": "14.827"
+        },
+        {
+          "type": "switch",
+          "name": "s1",
+          "mac": "00:00:00:00:00:05",
+          "port": 1,
+          "delay": "4.591"
+        },
+        {
+          "type": "switch",
+          "name": "s4",
+          "mac": "00:00:00:00:00:06",
+          "port": 3,
+          "delay": "3.256"
+        }
+      ]
+    },
+    {
+      "type": "switch",
+      "name": "s3",
+      "mac": "00:00:00:00:00:07",
+      "connections": [
+        {
+          "type": "host",
+          "name": "h3",
+          "mac": "4e:97:00:3e:b1:91",
+          "port": 3,
+          "delay": "7.123"
+        },
+        {
+          "type": "switch",
+          "name": "s1",
+          "mac": "00:00:00:00:00:08",
+          "port": 1,
+          "delay": "9.456"
+        },
+        {
+          "type": "switch",
+          "name": "s4",
+          "mac": "00:00:00:00:00:09",
+          "port": 2,
+          "delay": "8.789"
+        }
+      ]
+    },
+    {
+      "type": "switch",
+      "name": "s4",
+      "mac": "00:00:00:00:00:10",
+      "connections": [
+        {
+          "type": "host",
+          "name": "h4",
+          "mac": "86:aa:c3:64:d4:cd",
+          "port": 2,
+          "delay": "2.345"
+        },
+        {
+          "type": "switch",
+          "name": "s2",
+          "mac": "00:00:00:00:00:11",
+          "port": 1,
+          "delay": "1.678"
+        },
+        {
+          "type": "switch",
+          "name": "s3",
+          "mac": "00:00:00:00:00:12",
+          "port": 3,
+          "delay": "3.012"
+        }
+      ]
+    }
+  ]
+}
