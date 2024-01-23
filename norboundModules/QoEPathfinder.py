@@ -135,7 +135,6 @@ end = 'h4'
 
 import heapq
 #optimal qoe pathfinder using loss and delay matrix
-
 def find_optimal_path(source, dest):
     # Initialize the distance and previous node dictionaries
     distance = {}
@@ -158,41 +157,43 @@ def find_optimal_path(source, dest):
             break
 
         # Loop through the neighbors of the current node
-        for neighbor, delay in delay_matrix[current_node].items():
-            if neighbor not in loss_matrix:
-                continue  # Skip if the neighbor is not a switch
-            if current_node not in loss_matrix[neighbor]:
-                continue  # Skip if there is no corresponding loss value for the neighbor
-            # Calculate the new distance to the neighbor
-            new_distance = distance[current_node] + loss_matrix[neighbor][current_node] + delay
+        if current_node.startswith('s'):  # Only consider switches
+            for neighbor, delay in delay_matrix[current_node].items():
+                if neighbor.startswith('s') and neighbor not in loss_matrix[current_node]:
+                    continue  # Skip if there is no corresponding loss value for the switch
+                # Calculate the new distance to the neighbor
+                new_distance = distance[current_node] + loss_matrix[current_node][neighbor] + delay
 
-            # If the new distance is smaller than the current distance, update the distance and previous node
-            if new_distance < distance[neighbor]:
-                distance[neighbor] = new_distance
-                previous[neighbor] = current_node
+                # If the new distance is smaller than the current distance, update the distance and previous node
+                if new_distance < distance[neighbor]:
+                    distance[neighbor] = new_distance
+                    previous[neighbor] = current_node
 
-                # Add the neighbor to the priority queue
-                heapq.heappush(queue, (new_distance, neighbor))
+                    # Add the neighbor to the priority queue
+                    heapq.heappush(queue, (new_distance, neighbor))
 
     # Build the optimal path
     path = []
     current_node = dest
-    while current_node != source:
+    while current_node is not None:
         path.insert(0, current_node)
-        current_node = previous[current_node]
-    path.insert(0, source)
+        current_node = previous.get(current_node)  # Use get() to avoid KeyError
 
-    # Calculate the total loss and delay of the optimal path
-    total_loss = 0
-    total_delay = 0
-    for i in range(len(path) - 1):
-        total_loss += loss_matrix[path[i]][path[i+1]]
-        total_delay += delay_matrix[path[i]][path[i+1]]
+    # Check if the destination is reachable
+    if path[0] != start:
+        print(f"No path found from {start} to {end}.")
+    else:
+        # Calculate the total loss and delay of the optimal path
+        total_loss = 0
+        total_delay = 0
+        for i in range(len(path) - 1):
+            total_loss += loss_matrix[path[i]][path[i + 1]]
+            total_delay += delay_matrix[path[i]][path[i + 1]]
 
-    # Print the optimal path and its associated loss and delay metrics
-    print(f"Optimal path from {source} to {dest}: {' -> '.join(path)}")
-    print(f"Total loss: {total_loss * 100}%")
-    print(f"Total delay: {total_delay * 100}%")
+        # Print the optimal path and its associated loss and delay metrics
+        print(f"Optimal path from {start} to {end}: {' -> '.join(path)}")
+        print(f"Total loss: {total_loss * 100}%")
+        print(f"Total delay: {total_delay * 100}%")
 
 if __name__ == '__main__':
     find_optimal_path(start, end)
